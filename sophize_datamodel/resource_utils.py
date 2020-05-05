@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from resources import Argument, Article, Beliefset, Project, Proposition, Term
+from .resources import Argument, Article, Beliefset, Project, Proposition, Term
 
 
 def get_filename(assignable_id, resource_type):

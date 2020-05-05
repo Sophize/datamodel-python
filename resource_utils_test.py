@@ -3,8 +3,7 @@
 import json
 import unittest
 
-import resource_utils
-import resources
+from sophize_datamodel import *
 
 
 class ResourceUtilsTestCase(unittest.TestCase):
