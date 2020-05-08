@@ -15,6 +15,6 @@ To publish a new version of the library to maven, do the following:
     twine check dist/*
     twine upload dist/*
     ```
-* Add a git tag like `sophize-datamodel-0.1.2` to the commit used for the release.
+* Publish a new release [here](https://github.com/Sophize/datamodel-python/release). Use the version number to set the `Tag version` and `Release Title` fields.
 
 The publishing to maven was setup using instructions at [Real Python](https://realpython.com/pypi-publish-python-package/#publishing-to-pypi).
