@@ -2,6 +2,7 @@
 
 import json
 from pathlib import Path
+from typing import List
 
 from .resources import Argument, Article, Beliefset, Project, Proposition, Term
 
@@ -13,6 +14,8 @@ def get_filename(assignable_id, resource_type):
 
 def remove_nulls(obj):
     """Recursive function to remove nulls in a dict."""
+    if isinstance(obj, List):
+        return [remove_nulls(list_item) for list_item in obj]
     if not isinstance(obj, dict):
         return obj
     return {k: remove_nulls(v) for k, v in obj.items() if v is not None}
