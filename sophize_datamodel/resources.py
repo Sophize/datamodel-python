@@ -119,14 +119,14 @@ class Argument:
     assignable_ptr: Optional[str]
     citations: Optional[List[Citation]]
     contributor: Optional[User]
-    ephemeral_id: Optional[str]
+    ephemeral_ptr: Optional[str]
     indexable: Optional[bool]
     names: Optional[List[str]]
     not_permanent_ptr: Optional[str]
     permanent_ptr: Optional[str]
     tags: Optional[List[str]]
 
-    def __init__(self, argument_text: Optional[str], conclusion: Optional[str], language: Optional[Language], lookup_terms: Optional[List[str]], meta_language: Optional[MetaLanguage], premise_machine: Optional[str], premises: Optional[List[str]], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_id: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+    def __init__(self, argument_text: Optional[str], conclusion: Optional[str], language: Optional[Language], lookup_terms: Optional[List[str]], meta_language: Optional[MetaLanguage], premise_machine: Optional[str], premises: Optional[List[str]], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
         self.argument_text = argument_text
         self.conclusion = conclusion
         self.language = language
@@ -137,7 +137,7 @@ class Argument:
         self.assignable_ptr = assignable_ptr
         self.citations = citations
         self.contributor = contributor
-        self.ephemeral_id = ephemeral_id
+        self.ephemeral_ptr = ephemeral_ptr
         self.indexable = indexable
         self.names = names
         self.not_permanent_ptr = not_permanent_ptr
@@ -157,13 +157,13 @@ class Argument:
         assignable_ptr = from_union([from_str, from_none], obj.get("assignablePtr"))
         citations = from_union([lambda x: from_list(Citation.from_dict, x), from_none], obj.get("citations"))
         contributor = from_union([User.from_dict, from_none], obj.get("contributor"))
-        ephemeral_id = from_union([from_str, from_none], obj.get("ephemeralId"))
+        ephemeral_ptr = from_union([from_str, from_none], obj.get("ephemeralPtr"))
         indexable = from_union([from_bool, from_none], obj.get("indexable"))
         names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("names"))
         not_permanent_ptr = from_union([from_str, from_none], obj.get("notPermanentPtr"))
         permanent_ptr = from_union([from_str, from_none], obj.get("permanentPtr"))
         tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
-        return Argument(argument_text, conclusion, language, lookup_terms, meta_language, premise_machine, premises, assignable_ptr, citations, contributor, ephemeral_id, indexable, names, not_permanent_ptr, permanent_ptr, tags)
+        return Argument(argument_text, conclusion, language, lookup_terms, meta_language, premise_machine, premises, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -177,7 +177,7 @@ class Argument:
         result["assignablePtr"] = from_union([from_str, from_none], self.assignable_ptr)
         result["citations"] = from_union([lambda x: from_list(lambda x: to_class(Citation, x), x), from_none], self.citations)
         result["contributor"] = from_union([lambda x: to_class(User, x), from_none], self.contributor)
-        result["ephemeralId"] = from_union([from_str, from_none], self.ephemeral_id)
+        result["ephemeralPtr"] = from_union([from_str, from_none], self.ephemeral_ptr)
         result["indexable"] = from_union([from_bool, from_none], self.indexable)
         result["names"] = from_union([lambda x: from_list(from_str, x), from_none], self.names)
         result["notPermanentPtr"] = from_union([from_str, from_none], self.not_permanent_ptr)
@@ -213,14 +213,14 @@ class Article:
     assignable_ptr: Optional[str]
     citations: Optional[List[Citation]]
     contributor: Optional[User]
-    ephemeral_id: Optional[str]
+    ephemeral_ptr: Optional[str]
     indexable: Optional[bool]
     names: Optional[List[str]]
     not_permanent_ptr: Optional[str]
     permanent_ptr: Optional[str]
     tags: Optional[List[str]]
 
-    def __init__(self, abstract_text: Optional[str], authors: Optional[List[Author]], beliefset: Optional[str], content: Optional[str], title: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_id: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+    def __init__(self, abstract_text: Optional[str], authors: Optional[List[Author]], beliefset: Optional[str], content: Optional[str], title: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
         self.abstract_text = abstract_text
         self.authors = authors
         self.beliefset = beliefset
@@ -229,7 +229,7 @@ class Article:
         self.assignable_ptr = assignable_ptr
         self.citations = citations
         self.contributor = contributor
-        self.ephemeral_id = ephemeral_id
+        self.ephemeral_ptr = ephemeral_ptr
         self.indexable = indexable
         self.names = names
         self.not_permanent_ptr = not_permanent_ptr
@@ -247,13 +247,13 @@ class Article:
         assignable_ptr = from_union([from_str, from_none], obj.get("assignablePtr"))
         citations = from_union([lambda x: from_list(Citation.from_dict, x), from_none], obj.get("citations"))
         contributor = from_union([User.from_dict, from_none], obj.get("contributor"))
-        ephemeral_id = from_union([from_str, from_none], obj.get("ephemeralId"))
+        ephemeral_ptr = from_union([from_str, from_none], obj.get("ephemeralPtr"))
         indexable = from_union([from_bool, from_none], obj.get("indexable"))
         names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("names"))
         not_permanent_ptr = from_union([from_str, from_none], obj.get("notPermanentPtr"))
         permanent_ptr = from_union([from_str, from_none], obj.get("permanentPtr"))
         tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
-        return Article(abstract_text, authors, beliefset, content, title, assignable_ptr, citations, contributor, ephemeral_id, indexable, names, not_permanent_ptr, permanent_ptr, tags)
+        return Article(abstract_text, authors, beliefset, content, title, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -265,7 +265,7 @@ class Article:
         result["assignablePtr"] = from_union([from_str, from_none], self.assignable_ptr)
         result["citations"] = from_union([lambda x: from_list(lambda x: to_class(Citation, x), x), from_none], self.citations)
         result["contributor"] = from_union([lambda x: to_class(User, x), from_none], self.contributor)
-        result["ephemeralId"] = from_union([from_str, from_none], self.ephemeral_id)
+        result["ephemeralPtr"] = from_union([from_str, from_none], self.ephemeral_ptr)
         result["indexable"] = from_union([from_bool, from_none], self.indexable)
         result["names"] = from_union([lambda x: from_list(from_str, x), from_none], self.names)
         result["notPermanentPtr"] = from_union([from_str, from_none], self.not_permanent_ptr)
@@ -281,21 +281,21 @@ class Beliefset:
     assignable_ptr: Optional[str]
     citations: Optional[List[Citation]]
     contributor: Optional[User]
-    ephemeral_id: Optional[str]
+    ephemeral_ptr: Optional[str]
     indexable: Optional[bool]
     names: Optional[List[str]]
     not_permanent_ptr: Optional[str]
     permanent_ptr: Optional[str]
     tags: Optional[List[str]]
 
-    def __init__(self, sub_beliefset_ptrs: Optional[List[str]], unsupported_machine_ptrs: Optional[List[str]], unsupported_proposition_ptrs: Optional[List[str]], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_id: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+    def __init__(self, sub_beliefset_ptrs: Optional[List[str]], unsupported_machine_ptrs: Optional[List[str]], unsupported_proposition_ptrs: Optional[List[str]], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
         self.sub_beliefset_ptrs = sub_beliefset_ptrs
         self.unsupported_machine_ptrs = unsupported_machine_ptrs
         self.unsupported_proposition_ptrs = unsupported_proposition_ptrs
         self.assignable_ptr = assignable_ptr
         self.citations = citations
         self.contributor = contributor
-        self.ephemeral_id = ephemeral_id
+        self.ephemeral_ptr = ephemeral_ptr
         self.indexable = indexable
         self.names = names
         self.not_permanent_ptr = not_permanent_ptr
@@ -311,13 +311,13 @@ class Beliefset:
         assignable_ptr = from_union([from_str, from_none], obj.get("assignablePtr"))
         citations = from_union([lambda x: from_list(Citation.from_dict, x), from_none], obj.get("citations"))
         contributor = from_union([User.from_dict, from_none], obj.get("contributor"))
-        ephemeral_id = from_union([from_str, from_none], obj.get("ephemeralId"))
+        ephemeral_ptr = from_union([from_str, from_none], obj.get("ephemeralPtr"))
         indexable = from_union([from_bool, from_none], obj.get("indexable"))
         names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("names"))
         not_permanent_ptr = from_union([from_str, from_none], obj.get("notPermanentPtr"))
         permanent_ptr = from_union([from_str, from_none], obj.get("permanentPtr"))
         tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
-        return Beliefset(sub_beliefset_ptrs, unsupported_machine_ptrs, unsupported_proposition_ptrs, assignable_ptr, citations, contributor, ephemeral_id, indexable, names, not_permanent_ptr, permanent_ptr, tags)
+        return Beliefset(sub_beliefset_ptrs, unsupported_machine_ptrs, unsupported_proposition_ptrs, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -327,7 +327,7 @@ class Beliefset:
         result["assignablePtr"] = from_union([from_str, from_none], self.assignable_ptr)
         result["citations"] = from_union([lambda x: from_list(lambda x: to_class(Citation, x), x), from_none], self.citations)
         result["contributor"] = from_union([lambda x: to_class(User, x), from_none], self.contributor)
-        result["ephemeralId"] = from_union([from_str, from_none], self.ephemeral_id)
+        result["ephemeralPtr"] = from_union([from_str, from_none], self.ephemeral_ptr)
         result["indexable"] = from_union([from_bool, from_none], self.indexable)
         result["names"] = from_union([lambda x: from_list(from_str, x), from_none], self.names)
         result["notPermanentPtr"] = from_union([from_str, from_none], self.not_permanent_ptr)
@@ -345,14 +345,14 @@ class Machine:
     assignable_ptr: Optional[str]
     citations: Optional[List[Citation]]
     contributor: Optional[User]
-    ephemeral_id: Optional[str]
+    ephemeral_ptr: Optional[str]
     indexable: Optional[bool]
     names: Optional[List[str]]
     not_permanent_ptr: Optional[str]
     permanent_ptr: Optional[str]
     tags: Optional[List[str]]
 
-    def __init__(self, default_materialize_dataset: Optional[str], description: Optional[str], premise_machines: Optional[List[str]], premise_propositions: Optional[List[str]], server_name: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_id: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+    def __init__(self, default_materialize_dataset: Optional[str], description: Optional[str], premise_machines: Optional[List[str]], premise_propositions: Optional[List[str]], server_name: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
         self.default_materialize_dataset = default_materialize_dataset
         self.description = description
         self.premise_machines = premise_machines
@@ -361,7 +361,7 @@ class Machine:
         self.assignable_ptr = assignable_ptr
         self.citations = citations
         self.contributor = contributor
-        self.ephemeral_id = ephemeral_id
+        self.ephemeral_ptr = ephemeral_ptr
         self.indexable = indexable
         self.names = names
         self.not_permanent_ptr = not_permanent_ptr
@@ -379,13 +379,13 @@ class Machine:
         assignable_ptr = from_union([from_str, from_none], obj.get("assignablePtr"))
         citations = from_union([lambda x: from_list(Citation.from_dict, x), from_none], obj.get("citations"))
         contributor = from_union([User.from_dict, from_none], obj.get("contributor"))
-        ephemeral_id = from_union([from_str, from_none], obj.get("ephemeralId"))
+        ephemeral_ptr = from_union([from_str, from_none], obj.get("ephemeralPtr"))
         indexable = from_union([from_bool, from_none], obj.get("indexable"))
         names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("names"))
         not_permanent_ptr = from_union([from_str, from_none], obj.get("notPermanentPtr"))
         permanent_ptr = from_union([from_str, from_none], obj.get("permanentPtr"))
         tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
-        return Machine(default_materialize_dataset, description, premise_machines, premise_propositions, server_name, assignable_ptr, citations, contributor, ephemeral_id, indexable, names, not_permanent_ptr, permanent_ptr, tags)
+        return Machine(default_materialize_dataset, description, premise_machines, premise_propositions, server_name, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -397,7 +397,7 @@ class Machine:
         result["assignablePtr"] = from_union([from_str, from_none], self.assignable_ptr)
         result["citations"] = from_union([lambda x: from_list(lambda x: to_class(Citation, x), x), from_none], self.citations)
         result["contributor"] = from_union([lambda x: to_class(User, x), from_none], self.contributor)
-        result["ephemeralId"] = from_union([from_str, from_none], self.ephemeral_id)
+        result["ephemeralPtr"] = from_union([from_str, from_none], self.ephemeral_ptr)
         result["indexable"] = from_union([from_bool, from_none], self.indexable)
         result["names"] = from_union([lambda x: from_list(from_str, x), from_none], self.names)
         result["notPermanentPtr"] = from_union([from_str, from_none], self.not_permanent_ptr)
@@ -416,14 +416,14 @@ class Proposition:
     assignable_ptr: Optional[str]
     citations: Optional[List[Citation]]
     contributor: Optional[User]
-    ephemeral_id: Optional[str]
+    ephemeral_ptr: Optional[str]
     indexable: Optional[bool]
     names: Optional[List[str]]
     not_permanent_ptr: Optional[str]
     permanent_ptr: Optional[str]
     tags: Optional[List[str]]
 
-    def __init__(self, language: Optional[Language], lookup_terms: Optional[List[str]], meta_language: Optional[MetaLanguage], negative_statement: Optional[str], remarks: Optional[str], statement: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_id: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+    def __init__(self, language: Optional[Language], lookup_terms: Optional[List[str]], meta_language: Optional[MetaLanguage], negative_statement: Optional[str], remarks: Optional[str], statement: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
         self.language = language
         self.lookup_terms = lookup_terms
         self.meta_language = meta_language
@@ -433,7 +433,7 @@ class Proposition:
         self.assignable_ptr = assignable_ptr
         self.citations = citations
         self.contributor = contributor
-        self.ephemeral_id = ephemeral_id
+        self.ephemeral_ptr = ephemeral_ptr
         self.indexable = indexable
         self.names = names
         self.not_permanent_ptr = not_permanent_ptr
@@ -452,13 +452,13 @@ class Proposition:
         assignable_ptr = from_union([from_str, from_none], obj.get("assignablePtr"))
         citations = from_union([lambda x: from_list(Citation.from_dict, x), from_none], obj.get("citations"))
         contributor = from_union([User.from_dict, from_none], obj.get("contributor"))
-        ephemeral_id = from_union([from_str, from_none], obj.get("ephemeralId"))
+        ephemeral_ptr = from_union([from_str, from_none], obj.get("ephemeralPtr"))
         indexable = from_union([from_bool, from_none], obj.get("indexable"))
         names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("names"))
         not_permanent_ptr = from_union([from_str, from_none], obj.get("notPermanentPtr"))
         permanent_ptr = from_union([from_str, from_none], obj.get("permanentPtr"))
         tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
-        return Proposition(language, lookup_terms, meta_language, negative_statement, remarks, statement, assignable_ptr, citations, contributor, ephemeral_id, indexable, names, not_permanent_ptr, permanent_ptr, tags)
+        return Proposition(language, lookup_terms, meta_language, negative_statement, remarks, statement, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -471,7 +471,7 @@ class Proposition:
         result["assignablePtr"] = from_union([from_str, from_none], self.assignable_ptr)
         result["citations"] = from_union([lambda x: from_list(lambda x: to_class(Citation, x), x), from_none], self.citations)
         result["contributor"] = from_union([lambda x: to_class(User, x), from_none], self.contributor)
-        result["ephemeralId"] = from_union([from_str, from_none], self.ephemeral_id)
+        result["ephemeralPtr"] = from_union([from_str, from_none], self.ephemeral_ptr)
         result["indexable"] = from_union([from_bool, from_none], self.indexable)
         result["names"] = from_union([lambda x: from_list(from_str, x), from_none], self.names)
         result["notPermanentPtr"] = from_union([from_str, from_none], self.not_permanent_ptr)
@@ -522,12 +522,16 @@ class TruthValue(Enum):
 
 
 class MachineResponse:
+    existing_proposition_ptr: Optional[str]
+    message: Optional[str]
     proof_arguments: Optional[List[Argument]]
     proof_propositions: Optional[List[Proposition]]
     resolved_proposition: Optional[Proposition]
     truth_value: Optional[TruthValue]
 
-    def __init__(self, proof_arguments: Optional[List[Argument]], proof_propositions: Optional[List[Proposition]], resolved_proposition: Optional[Proposition], truth_value: Optional[TruthValue]) -> None:
+    def __init__(self, existing_proposition_ptr: Optional[str], message: Optional[str], proof_arguments: Optional[List[Argument]], proof_propositions: Optional[List[Proposition]], resolved_proposition: Optional[Proposition], truth_value: Optional[TruthValue]) -> None:
+        self.existing_proposition_ptr = existing_proposition_ptr
+        self.message = message
         self.proof_arguments = proof_arguments
         self.proof_propositions = proof_propositions
         self.resolved_proposition = resolved_proposition
@@ -536,14 +540,18 @@ class MachineResponse:
     @staticmethod
     def from_dict(obj: Any) -> 'MachineResponse':
         assert isinstance(obj, dict)
+        existing_proposition_ptr = from_union([from_str, from_none], obj.get("existingPropositionPtr"))
+        message = from_union([from_str, from_none], obj.get("message"))
         proof_arguments = from_union([lambda x: from_list(Argument.from_dict, x), from_none], obj.get("proofArguments"))
         proof_propositions = from_union([lambda x: from_list(Proposition.from_dict, x), from_none], obj.get("proofPropositions"))
         resolved_proposition = from_union([Proposition.from_dict, from_none], obj.get("resolvedProposition"))
         truth_value = from_union([TruthValue, from_none], obj.get("truthValue"))
-        return MachineResponse(proof_arguments, proof_propositions, resolved_proposition, truth_value)
+        return MachineResponse(existing_proposition_ptr, message, proof_arguments, proof_propositions, resolved_proposition, truth_value)
 
     def to_dict(self) -> dict:
         result: dict = {}
+        result["existingPropositionPtr"] = from_union([from_str, from_none], self.existing_proposition_ptr)
+        result["message"] = from_union([from_str, from_none], self.message)
         result["proofArguments"] = from_union([lambda x: from_list(lambda x: to_class(Argument, x), x), from_none], self.proof_arguments)
         result["proofPropositions"] = from_union([lambda x: from_list(lambda x: to_class(Proposition, x), x), from_none], self.proof_propositions)
         result["resolvedProposition"] = from_union([lambda x: to_class(Proposition, x), from_none], self.resolved_proposition)
@@ -557,20 +565,20 @@ class Project:
     assignable_ptr: Optional[str]
     citations: Optional[List[Citation]]
     contributor: Optional[User]
-    ephemeral_id: Optional[str]
+    ephemeral_ptr: Optional[str]
     indexable: Optional[bool]
     names: Optional[List[str]]
     not_permanent_ptr: Optional[str]
     permanent_ptr: Optional[str]
     tags: Optional[List[str]]
 
-    def __init__(self, abstract_text: Optional[str], description: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_id: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+    def __init__(self, abstract_text: Optional[str], description: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
         self.abstract_text = abstract_text
         self.description = description
         self.assignable_ptr = assignable_ptr
         self.citations = citations
         self.contributor = contributor
-        self.ephemeral_id = ephemeral_id
+        self.ephemeral_ptr = ephemeral_ptr
         self.indexable = indexable
         self.names = names
         self.not_permanent_ptr = not_permanent_ptr
@@ -585,13 +593,13 @@ class Project:
         assignable_ptr = from_union([from_str, from_none], obj.get("assignablePtr"))
         citations = from_union([lambda x: from_list(Citation.from_dict, x), from_none], obj.get("citations"))
         contributor = from_union([User.from_dict, from_none], obj.get("contributor"))
-        ephemeral_id = from_union([from_str, from_none], obj.get("ephemeralId"))
+        ephemeral_ptr = from_union([from_str, from_none], obj.get("ephemeralPtr"))
         indexable = from_union([from_bool, from_none], obj.get("indexable"))
         names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("names"))
         not_permanent_ptr = from_union([from_str, from_none], obj.get("notPermanentPtr"))
         permanent_ptr = from_union([from_str, from_none], obj.get("permanentPtr"))
         tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
-        return Project(abstract_text, description, assignable_ptr, citations, contributor, ephemeral_id, indexable, names, not_permanent_ptr, permanent_ptr, tags)
+        return Project(abstract_text, description, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -600,7 +608,7 @@ class Project:
         result["assignablePtr"] = from_union([from_str, from_none], self.assignable_ptr)
         result["citations"] = from_union([lambda x: from_list(lambda x: to_class(Citation, x), x), from_none], self.citations)
         result["contributor"] = from_union([lambda x: to_class(User, x), from_none], self.contributor)
-        result["ephemeralId"] = from_union([from_str, from_none], self.ephemeral_id)
+        result["ephemeralPtr"] = from_union([from_str, from_none], self.ephemeral_ptr)
         result["indexable"] = from_union([from_bool, from_none], self.indexable)
         result["names"] = from_union([lambda x: from_list(from_str, x), from_none], self.names)
         result["notPermanentPtr"] = from_union([from_str, from_none], self.not_permanent_ptr)
@@ -621,14 +629,14 @@ class Term:
     assignable_ptr: Optional[str]
     citations: Optional[List[Citation]]
     contributor: Optional[User]
-    ephemeral_id: Optional[str]
+    ephemeral_ptr: Optional[str]
     indexable: Optional[bool]
     names: Optional[List[str]]
     not_permanent_ptr: Optional[str]
     permanent_ptr: Optional[str]
     tags: Optional[List[str]]
 
-    def __init__(self, alternate_phrases: Optional[List[str]], definition: Optional[str], language: Optional[Language], lookup_terms: Optional[List[str]], meta_language: Optional[MetaLanguage], phrase: Optional[str], primitive: Optional[bool], remarks: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_id: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+    def __init__(self, alternate_phrases: Optional[List[str]], definition: Optional[str], language: Optional[Language], lookup_terms: Optional[List[str]], meta_language: Optional[MetaLanguage], phrase: Optional[str], primitive: Optional[bool], remarks: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
         self.alternate_phrases = alternate_phrases
         self.definition = definition
         self.language = language
@@ -640,7 +648,7 @@ class Term:
         self.assignable_ptr = assignable_ptr
         self.citations = citations
         self.contributor = contributor
-        self.ephemeral_id = ephemeral_id
+        self.ephemeral_ptr = ephemeral_ptr
         self.indexable = indexable
         self.names = names
         self.not_permanent_ptr = not_permanent_ptr
@@ -661,13 +669,13 @@ class Term:
         assignable_ptr = from_union([from_str, from_none], obj.get("assignablePtr"))
         citations = from_union([lambda x: from_list(Citation.from_dict, x), from_none], obj.get("citations"))
         contributor = from_union([User.from_dict, from_none], obj.get("contributor"))
-        ephemeral_id = from_union([from_str, from_none], obj.get("ephemeralId"))
+        ephemeral_ptr = from_union([from_str, from_none], obj.get("ephemeralPtr"))
         indexable = from_union([from_bool, from_none], obj.get("indexable"))
         names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("names"))
         not_permanent_ptr = from_union([from_str, from_none], obj.get("notPermanentPtr"))
         permanent_ptr = from_union([from_str, from_none], obj.get("permanentPtr"))
         tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
-        return Term(alternate_phrases, definition, language, lookup_terms, meta_language, phrase, primitive, remarks, assignable_ptr, citations, contributor, ephemeral_id, indexable, names, not_permanent_ptr, permanent_ptr, tags)
+        return Term(alternate_phrases, definition, language, lookup_terms, meta_language, phrase, primitive, remarks, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -682,7 +690,7 @@ class Term:
         result["assignablePtr"] = from_union([from_str, from_none], self.assignable_ptr)
         result["citations"] = from_union([lambda x: from_list(lambda x: to_class(Citation, x), x), from_none], self.citations)
         result["contributor"] = from_union([lambda x: to_class(User, x), from_none], self.contributor)
-        result["ephemeralId"] = from_union([from_str, from_none], self.ephemeral_id)
+        result["ephemeralPtr"] = from_union([from_str, from_none], self.ephemeral_ptr)
         result["indexable"] = from_union([from_bool, from_none], self.indexable)
         result["names"] = from_union([lambda x: from_list(from_str, x), from_none], self.names)
         result["notPermanentPtr"] = from_union([from_str, from_none], self.not_permanent_ptr)
