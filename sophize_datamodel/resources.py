@@ -337,7 +337,10 @@ class Beliefset:
 
 
 class Machine:
+    default_language: Optional[Language]
+    default_lenient_statement: Optional[str]
     default_materialize_dataset: Optional[str]
+    default_strict_statement: Optional[str]
     description: Optional[str]
     premise_machines: Optional[List[str]]
     premise_propositions: Optional[List[str]]
@@ -352,8 +355,11 @@ class Machine:
     permanent_ptr: Optional[str]
     tags: Optional[List[str]]
 
-    def __init__(self, default_materialize_dataset: Optional[str], description: Optional[str], premise_machines: Optional[List[str]], premise_propositions: Optional[List[str]], server_name: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+    def __init__(self, default_language: Optional[Language], default_lenient_statement: Optional[str], default_materialize_dataset: Optional[str], default_strict_statement: Optional[str], description: Optional[str], premise_machines: Optional[List[str]], premise_propositions: Optional[List[str]], server_name: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+        self.default_language = default_language
+        self.default_lenient_statement = default_lenient_statement
         self.default_materialize_dataset = default_materialize_dataset
+        self.default_strict_statement = default_strict_statement
         self.description = description
         self.premise_machines = premise_machines
         self.premise_propositions = premise_propositions
@@ -371,7 +377,10 @@ class Machine:
     @staticmethod
     def from_dict(obj: Any) -> 'Machine':
         assert isinstance(obj, dict)
+        default_language = from_union([Language, from_none], obj.get("defaultLanguage"))
+        default_lenient_statement = from_union([from_str, from_none], obj.get("defaultLenientStatement"))
         default_materialize_dataset = from_union([from_str, from_none], obj.get("defaultMaterializeDataset"))
+        default_strict_statement = from_union([from_str, from_none], obj.get("defaultStrictStatement"))
         description = from_union([from_str, from_none], obj.get("description"))
         premise_machines = from_union([lambda x: from_list(from_str, x), from_none], obj.get("premiseMachines"))
         premise_propositions = from_union([lambda x: from_list(from_str, x), from_none], obj.get("premisePropositions"))
@@ -385,11 +394,14 @@ class Machine:
         not_permanent_ptr = from_union([from_str, from_none], obj.get("notPermanentPtr"))
         permanent_ptr = from_union([from_str, from_none], obj.get("permanentPtr"))
         tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
-        return Machine(default_materialize_dataset, description, premise_machines, premise_propositions, server_name, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
+        return Machine(default_language, default_lenient_statement, default_materialize_dataset, default_strict_statement, description, premise_machines, premise_propositions, server_name, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
 
     def to_dict(self) -> dict:
         result: dict = {}
+        result["defaultLanguage"] = from_union([lambda x: to_enum(Language, x), from_none], self.default_language)
+        result["defaultLenientStatement"] = from_union([from_str, from_none], self.default_lenient_statement)
         result["defaultMaterializeDataset"] = from_union([from_str, from_none], self.default_materialize_dataset)
+        result["defaultStrictStatement"] = from_union([from_str, from_none], self.default_strict_statement)
         result["description"] = from_union([from_str, from_none], self.description)
         result["premiseMachines"] = from_union([lambda x: from_list(from_str, x), from_none], self.premise_machines)
         result["premisePropositions"] = from_union([lambda x: from_list(from_str, x), from_none], self.premise_propositions)

@@ -10,7 +10,7 @@ To publish a new version of the library to maven, do the following:
 * Update the version number in file `setup.py`
 * Run the following commands
     ```
-    python resource_utils_test.py 
+    ./pre_upload.sh
     python setup.py sdist bdist_wheel
     twine check dist/*
     twine upload dist/*
