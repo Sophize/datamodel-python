@@ -45,6 +45,8 @@ def resource_from_dict(resource_code, json_data):
         return Article.from_dict(json_data)
     if resource_code == 'J':
         return Project.from_dict(json_data)
+    if resource_code == 'M':
+        return Machine.from_dict(json_data)
     return None
 
 
@@ -70,4 +72,6 @@ def _get_resource_code(resource_type):
         return 'R'
     if resource_type == Project:
         return 'J'
+    if resource_type == Machine:
+        return 'M'
     return None

@@ -46,6 +46,16 @@ def to_class(c: Type[T], x: Any) -> dict:
     return cast(Any, x).to_dict()
 
 
+def from_float(x: Any) -> float:
+    assert isinstance(x, (float, int)) and not isinstance(x, bool)
+    return float(x)
+
+
+def to_float(x: Any) -> float:
+    assert isinstance(x, float)
+    return x
+
+
 class Citation:
     text_citation: Optional[str]
 
@@ -418,6 +428,106 @@ class Machine:
         return result
 
 
+class Page:
+    citations: Optional[List[Citation]]
+    contributor: Optional[User]
+    description: Optional[str]
+    page_id: Optional[str]
+    parent_page_id: Optional[str]
+    sort_hint: Optional[float]
+    title: Optional[str]
+
+    def __init__(self, citations: Optional[List[Citation]], contributor: Optional[User], description: Optional[str], page_id: Optional[str], parent_page_id: Optional[str], sort_hint: Optional[float], title: Optional[str]) -> None:
+        self.citations = citations
+        self.contributor = contributor
+        self.description = description
+        self.page_id = page_id
+        self.parent_page_id = parent_page_id
+        self.sort_hint = sort_hint
+        self.title = title
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Page':
+        assert isinstance(obj, dict)
+        citations = from_union([lambda x: from_list(Citation.from_dict, x), from_none], obj.get("citations"))
+        contributor = from_union([User.from_dict, from_none], obj.get("contributor"))
+        description = from_union([from_str, from_none], obj.get("description"))
+        page_id = from_union([from_str, from_none], obj.get("pageId"))
+        parent_page_id = from_union([from_str, from_none], obj.get("parentPageId"))
+        sort_hint = from_union([from_float, from_none], obj.get("sortHint"))
+        title = from_union([from_str, from_none], obj.get("title"))
+        return Page(citations, contributor, description, page_id, parent_page_id, sort_hint, title)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["citations"] = from_union([lambda x: from_list(lambda x: to_class(Citation, x), x), from_none], self.citations)
+        result["contributor"] = from_union([lambda x: to_class(User, x), from_none], self.contributor)
+        result["description"] = from_union([from_str, from_none], self.description)
+        result["pageId"] = from_union([from_str, from_none], self.page_id)
+        result["parentPageId"] = from_union([from_str, from_none], self.parent_page_id)
+        result["sortHint"] = from_union([to_float, from_none], self.sort_hint)
+        result["title"] = from_union([from_str, from_none], self.title)
+        return result
+
+
+class Project:
+    abstract_text: Optional[str]
+    description: Optional[str]
+    assignable_ptr: Optional[str]
+    citations: Optional[List[Citation]]
+    contributor: Optional[User]
+    ephemeral_ptr: Optional[str]
+    indexable: Optional[bool]
+    names: Optional[List[str]]
+    not_permanent_ptr: Optional[str]
+    permanent_ptr: Optional[str]
+    tags: Optional[List[str]]
+
+    def __init__(self, abstract_text: Optional[str], description: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+        self.abstract_text = abstract_text
+        self.description = description
+        self.assignable_ptr = assignable_ptr
+        self.citations = citations
+        self.contributor = contributor
+        self.ephemeral_ptr = ephemeral_ptr
+        self.indexable = indexable
+        self.names = names
+        self.not_permanent_ptr = not_permanent_ptr
+        self.permanent_ptr = permanent_ptr
+        self.tags = tags
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Project':
+        assert isinstance(obj, dict)
+        abstract_text = from_union([from_str, from_none], obj.get("abstractText"))
+        description = from_union([from_str, from_none], obj.get("description"))
+        assignable_ptr = from_union([from_str, from_none], obj.get("assignablePtr"))
+        citations = from_union([lambda x: from_list(Citation.from_dict, x), from_none], obj.get("citations"))
+        contributor = from_union([User.from_dict, from_none], obj.get("contributor"))
+        ephemeral_ptr = from_union([from_str, from_none], obj.get("ephemeralPtr"))
+        indexable = from_union([from_bool, from_none], obj.get("indexable"))
+        names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("names"))
+        not_permanent_ptr = from_union([from_str, from_none], obj.get("notPermanentPtr"))
+        permanent_ptr = from_union([from_str, from_none], obj.get("permanentPtr"))
+        tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
+        return Project(abstract_text, description, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["abstractText"] = from_union([from_str, from_none], self.abstract_text)
+        result["description"] = from_union([from_str, from_none], self.description)
+        result["assignablePtr"] = from_union([from_str, from_none], self.assignable_ptr)
+        result["citations"] = from_union([lambda x: from_list(lambda x: to_class(Citation, x), x), from_none], self.citations)
+        result["contributor"] = from_union([lambda x: to_class(User, x), from_none], self.contributor)
+        result["ephemeralPtr"] = from_union([from_str, from_none], self.ephemeral_ptr)
+        result["indexable"] = from_union([from_bool, from_none], self.indexable)
+        result["names"] = from_union([lambda x: from_list(from_str, x), from_none], self.names)
+        result["notPermanentPtr"] = from_union([from_str, from_none], self.not_permanent_ptr)
+        result["permanentPtr"] = from_union([from_str, from_none], self.permanent_ptr)
+        result["tags"] = from_union([lambda x: from_list(from_str, x), from_none], self.tags)
+        return result
+
+
 class Proposition:
     language: Optional[Language]
     lookup_terms: Optional[List[str]]
@@ -492,37 +602,37 @@ class Proposition:
         return result
 
 
-class MachineRequest:
+class ProofRequest:
     fetch_proof: Optional[bool]
     fetch_updated_proposition: Optional[bool]
     machine_ptr: Optional[str]
+    parse_lenient: Optional[bool]
     proposition: Optional[Proposition]
-    try_completing_proposition: Optional[bool]
 
-    def __init__(self, fetch_proof: Optional[bool], fetch_updated_proposition: Optional[bool], machine_ptr: Optional[str], proposition: Optional[Proposition], try_completing_proposition: Optional[bool]) -> None:
+    def __init__(self, fetch_proof: Optional[bool], fetch_updated_proposition: Optional[bool], machine_ptr: Optional[str], parse_lenient: Optional[bool], proposition: Optional[Proposition]) -> None:
         self.fetch_proof = fetch_proof
         self.fetch_updated_proposition = fetch_updated_proposition
         self.machine_ptr = machine_ptr
+        self.parse_lenient = parse_lenient
         self.proposition = proposition
-        self.try_completing_proposition = try_completing_proposition
 
     @staticmethod
-    def from_dict(obj: Any) -> 'MachineRequest':
+    def from_dict(obj: Any) -> 'ProofRequest':
         assert isinstance(obj, dict)
         fetch_proof = from_union([from_bool, from_none], obj.get("fetchProof"))
         fetch_updated_proposition = from_union([from_bool, from_none], obj.get("fetchUpdatedProposition"))
         machine_ptr = from_union([from_str, from_none], obj.get("machinePtr"))
+        parse_lenient = from_union([from_bool, from_none], obj.get("parseLenient"))
         proposition = from_union([Proposition.from_dict, from_none], obj.get("proposition"))
-        try_completing_proposition = from_union([from_bool, from_none], obj.get("tryCompletingProposition"))
-        return MachineRequest(fetch_proof, fetch_updated_proposition, machine_ptr, proposition, try_completing_proposition)
+        return ProofRequest(fetch_proof, fetch_updated_proposition, machine_ptr, parse_lenient, proposition)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["fetchProof"] = from_union([from_bool, from_none], self.fetch_proof)
         result["fetchUpdatedProposition"] = from_union([from_bool, from_none], self.fetch_updated_proposition)
         result["machinePtr"] = from_union([from_str, from_none], self.machine_ptr)
+        result["parseLenient"] = from_union([from_bool, from_none], self.parse_lenient)
         result["proposition"] = from_union([lambda x: to_class(Proposition, x), from_none], self.proposition)
-        result["tryCompletingProposition"] = from_union([from_bool, from_none], self.try_completing_proposition)
         return result
 
 
@@ -533,7 +643,7 @@ class TruthValue(Enum):
     UNKNOWN = "UNKNOWN"
 
 
-class MachineResponse:
+class ProofResponse:
     existing_proposition_ptr: Optional[str]
     message: Optional[str]
     proof_arguments: Optional[List[Argument]]
@@ -550,7 +660,7 @@ class MachineResponse:
         self.truth_value = truth_value
 
     @staticmethod
-    def from_dict(obj: Any) -> 'MachineResponse':
+    def from_dict(obj: Any) -> 'ProofResponse':
         assert isinstance(obj, dict)
         existing_proposition_ptr = from_union([from_str, from_none], obj.get("existingPropositionPtr"))
         message = from_union([from_str, from_none], obj.get("message"))
@@ -558,7 +668,7 @@ class MachineResponse:
         proof_propositions = from_union([lambda x: from_list(Proposition.from_dict, x), from_none], obj.get("proofPropositions"))
         resolved_proposition = from_union([Proposition.from_dict, from_none], obj.get("resolvedProposition"))
         truth_value = from_union([TruthValue, from_none], obj.get("truthValue"))
-        return MachineResponse(existing_proposition_ptr, message, proof_arguments, proof_propositions, resolved_proposition, truth_value)
+        return ProofResponse(existing_proposition_ptr, message, proof_arguments, proof_propositions, resolved_proposition, truth_value)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -568,64 +678,6 @@ class MachineResponse:
         result["proofPropositions"] = from_union([lambda x: from_list(lambda x: to_class(Proposition, x), x), from_none], self.proof_propositions)
         result["resolvedProposition"] = from_union([lambda x: to_class(Proposition, x), from_none], self.resolved_proposition)
         result["truthValue"] = from_union([lambda x: to_enum(TruthValue, x), from_none], self.truth_value)
-        return result
-
-
-class Project:
-    abstract_text: Optional[str]
-    description: Optional[str]
-    assignable_ptr: Optional[str]
-    citations: Optional[List[Citation]]
-    contributor: Optional[User]
-    ephemeral_ptr: Optional[str]
-    indexable: Optional[bool]
-    names: Optional[List[str]]
-    not_permanent_ptr: Optional[str]
-    permanent_ptr: Optional[str]
-    tags: Optional[List[str]]
-
-    def __init__(self, abstract_text: Optional[str], description: Optional[str], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
-        self.abstract_text = abstract_text
-        self.description = description
-        self.assignable_ptr = assignable_ptr
-        self.citations = citations
-        self.contributor = contributor
-        self.ephemeral_ptr = ephemeral_ptr
-        self.indexable = indexable
-        self.names = names
-        self.not_permanent_ptr = not_permanent_ptr
-        self.permanent_ptr = permanent_ptr
-        self.tags = tags
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Project':
-        assert isinstance(obj, dict)
-        abstract_text = from_union([from_str, from_none], obj.get("abstractText"))
-        description = from_union([from_str, from_none], obj.get("description"))
-        assignable_ptr = from_union([from_str, from_none], obj.get("assignablePtr"))
-        citations = from_union([lambda x: from_list(Citation.from_dict, x), from_none], obj.get("citations"))
-        contributor = from_union([User.from_dict, from_none], obj.get("contributor"))
-        ephemeral_ptr = from_union([from_str, from_none], obj.get("ephemeralPtr"))
-        indexable = from_union([from_bool, from_none], obj.get("indexable"))
-        names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("names"))
-        not_permanent_ptr = from_union([from_str, from_none], obj.get("notPermanentPtr"))
-        permanent_ptr = from_union([from_str, from_none], obj.get("permanentPtr"))
-        tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
-        return Project(abstract_text, description, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["abstractText"] = from_union([from_str, from_none], self.abstract_text)
-        result["description"] = from_union([from_str, from_none], self.description)
-        result["assignablePtr"] = from_union([from_str, from_none], self.assignable_ptr)
-        result["citations"] = from_union([lambda x: from_list(lambda x: to_class(Citation, x), x), from_none], self.citations)
-        result["contributor"] = from_union([lambda x: to_class(User, x), from_none], self.contributor)
-        result["ephemeralPtr"] = from_union([from_str, from_none], self.ephemeral_ptr)
-        result["indexable"] = from_union([from_bool, from_none], self.indexable)
-        result["names"] = from_union([lambda x: from_list(from_str, x), from_none], self.names)
-        result["notPermanentPtr"] = from_union([from_str, from_none], self.not_permanent_ptr)
-        result["permanentPtr"] = from_union([from_str, from_none], self.permanent_ptr)
-        result["tags"] = from_union([lambda x: from_list(from_str, x), from_none], self.tags)
         return result
 
 
