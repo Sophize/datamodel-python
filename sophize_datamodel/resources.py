@@ -285,6 +285,7 @@ class Article:
 
 
 class Beliefset:
+    description: Optional[str]
     sub_beliefset_ptrs: Optional[List[str]]
     unsupported_machine_ptrs: Optional[List[str]]
     unsupported_proposition_ptrs: Optional[List[str]]
@@ -298,7 +299,8 @@ class Beliefset:
     permanent_ptr: Optional[str]
     tags: Optional[List[str]]
 
-    def __init__(self, sub_beliefset_ptrs: Optional[List[str]], unsupported_machine_ptrs: Optional[List[str]], unsupported_proposition_ptrs: Optional[List[str]], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+    def __init__(self, description: Optional[str], sub_beliefset_ptrs: Optional[List[str]], unsupported_machine_ptrs: Optional[List[str]], unsupported_proposition_ptrs: Optional[List[str]], assignable_ptr: Optional[str], citations: Optional[List[Citation]], contributor: Optional[User], ephemeral_ptr: Optional[str], indexable: Optional[bool], names: Optional[List[str]], not_permanent_ptr: Optional[str], permanent_ptr: Optional[str], tags: Optional[List[str]]) -> None:
+        self.description = description
         self.sub_beliefset_ptrs = sub_beliefset_ptrs
         self.unsupported_machine_ptrs = unsupported_machine_ptrs
         self.unsupported_proposition_ptrs = unsupported_proposition_ptrs
@@ -315,6 +317,7 @@ class Beliefset:
     @staticmethod
     def from_dict(obj: Any) -> 'Beliefset':
         assert isinstance(obj, dict)
+        description = from_union([from_str, from_none], obj.get("description"))
         sub_beliefset_ptrs = from_union([lambda x: from_list(from_str, x), from_none], obj.get("subBeliefsetPtrs"))
         unsupported_machine_ptrs = from_union([lambda x: from_list(from_str, x), from_none], obj.get("unsupportedMachinePtrs"))
         unsupported_proposition_ptrs = from_union([lambda x: from_list(from_str, x), from_none], obj.get("unsupportedPropositionPtrs"))
@@ -327,10 +330,11 @@ class Beliefset:
         not_permanent_ptr = from_union([from_str, from_none], obj.get("notPermanentPtr"))
         permanent_ptr = from_union([from_str, from_none], obj.get("permanentPtr"))
         tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
-        return Beliefset(sub_beliefset_ptrs, unsupported_machine_ptrs, unsupported_proposition_ptrs, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
+        return Beliefset(description, sub_beliefset_ptrs, unsupported_machine_ptrs, unsupported_proposition_ptrs, assignable_ptr, citations, contributor, ephemeral_ptr, indexable, names, not_permanent_ptr, permanent_ptr, tags)
 
     def to_dict(self) -> dict:
         result: dict = {}
+        result["description"] = from_union([from_str, from_none], self.description)
         result["subBeliefsetPtrs"] = from_union([lambda x: from_list(from_str, x), from_none], self.sub_beliefset_ptrs)
         result["unsupportedMachinePtrs"] = from_union([lambda x: from_list(from_str, x), from_none], self.unsupported_machine_ptrs)
         result["unsupportedPropositionPtrs"] = from_union([lambda x: from_list(from_str, x), from_none], self.unsupported_proposition_ptrs)
