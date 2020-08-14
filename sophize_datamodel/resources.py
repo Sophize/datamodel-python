@@ -350,6 +350,112 @@ class Beliefset:
         return result
 
 
+class LicenseType(Enum):
+    CC0 = "CC0"
+    CC_BY = "CC_BY"
+    CC_BY_NC = "CC_BY_NC"
+    CC_BY_NC_ND = "CC_BY_NC_ND"
+    CC_BY_NC_SA = "CC_BY_NC_SA"
+    CC_BY_ND = "CC_BY_ND"
+    CC_BY_SA = "CC_BY_SA"
+    GNU_GPL = "GNU_GPL"
+    MIT = "MIT"
+    UNKNOWN = "UNKNOWN"
+
+
+class License:
+    license_text: Optional[str]
+    license_type: Optional[LicenseType]
+    link_to_license: Optional[str]
+
+    def __init__(self, license_text: Optional[str], license_type: Optional[LicenseType], link_to_license: Optional[str]) -> None:
+        self.license_text = license_text
+        self.license_type = license_type
+        self.link_to_license = link_to_license
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'License':
+        assert isinstance(obj, dict)
+        license_text = from_union([from_str, from_none], obj.get("licenseText"))
+        license_type = from_union([LicenseType, from_none], obj.get("licenseType"))
+        link_to_license = from_union([from_str, from_none], obj.get("linkToLicense"))
+        return License(license_text, license_type, link_to_license)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["licenseText"] = from_union([from_str, from_none], self.license_text)
+        result["licenseType"] = from_union([lambda x: to_enum(LicenseType, x), from_none], self.license_type)
+        result["linkToLicense"] = from_union([from_str, from_none], self.link_to_license)
+        return result
+
+
+class AccessType(Enum):
+    ADD_NEW_DATA = "ADD_NEW_DATA"
+    APPROVE_DATA_UPDATES = "APPROVE_DATA_UPDATES"
+    APPROVE_USER_UPDATES = "APPROVE_USER_UPDATES"
+    APPROVE_VALIDITY = "APPROVE_VALIDITY"
+    COMMENT = "COMMENT"
+    DATASET_PROPERTY_UPDATE = "DATASET_PROPERTY_UPDATE"
+    EDIT_DELETE_DATA = "EDIT_DELETE_DATA"
+    GLOBAL_APPROVE_VALIDITY = "GLOBAL_APPROVE_VALIDITY"
+    MODERATE_COMMENTS = "MODERATE_COMMENTS"
+    READ_DATA = "READ_DATA"
+    SUGGEST_DATA_UPDATES = "SUGGEST_DATA_UPDATES"
+    SUGGEST_USER_UPDATES = "SUGGEST_USER_UPDATES"
+    UNKNOWN = "UNKNOWN"
+    UPDATE_USER = "UPDATE_USER"
+
+
+class Dataset:
+    banner_url: Optional[str]
+    custom_home_article: Optional[bool]
+    description: Optional[str]
+    icon_url: Optional[str]
+    licenses: Optional[List[License]]
+    name: Optional[str]
+    open_acls: Optional[List[AccessType]]
+    subscribed_datasets: Optional[List[str]]
+    tags: Optional[List[str]]
+
+    def __init__(self, banner_url: Optional[str], custom_home_article: Optional[bool], description: Optional[str], icon_url: Optional[str], licenses: Optional[List[License]], name: Optional[str], open_acls: Optional[List[AccessType]], subscribed_datasets: Optional[List[str]], tags: Optional[List[str]]) -> None:
+        self.banner_url = banner_url
+        self.custom_home_article = custom_home_article
+        self.description = description
+        self.icon_url = icon_url
+        self.licenses = licenses
+        self.name = name
+        self.open_acls = open_acls
+        self.subscribed_datasets = subscribed_datasets
+        self.tags = tags
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Dataset':
+        assert isinstance(obj, dict)
+        banner_url = from_union([from_str, from_none], obj.get("bannerUrl"))
+        custom_home_article = from_union([from_bool, from_none], obj.get("customHomeArticle"))
+        description = from_union([from_str, from_none], obj.get("description"))
+        icon_url = from_union([from_str, from_none], obj.get("iconUrl"))
+        licenses = from_union([lambda x: from_list(License.from_dict, x), from_none], obj.get("licenses"))
+        name = from_union([from_str, from_none], obj.get("name"))
+        open_acls = from_union([lambda x: from_list(AccessType, x), from_none], obj.get("openAcls"))
+        subscribed_datasets = from_union([lambda x: from_list(from_str, x), from_none], obj.get("subscribedDatasets"))
+        tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
+        return Dataset(banner_url, custom_home_article, description, icon_url, licenses, name, open_acls, subscribed_datasets, tags)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["bannerUrl"] = from_union([from_str, from_none], self.banner_url)
+        result["customHomeArticle"] = from_union([from_bool, from_none], self.custom_home_article)
+        result["description"] = from_union([from_str, from_none], self.description)
+        result["iconUrl"] = from_union([from_str, from_none], self.icon_url)
+        result["licenses"] = from_union([lambda x: from_list(lambda x: to_class(License, x), x), from_none], self.licenses)
+        result["name"] = from_union([from_str, from_none], self.name)
+        result["openAcls"] = from_union([lambda x: from_list(lambda x: to_enum(AccessType, x), x), from_none], self.open_acls)
+        result["subscribedDatasets"] = from_union([lambda x: from_list(from_str, x), from_none], self.subscribed_datasets)
+        result["tags"] = from_union([lambda x: from_list(from_str, x), from_none], self.tags)
+        return result
+
+
 class Machine:
     default_language: Optional[Language]
     default_lenient_statement: Optional[str]
@@ -682,6 +788,65 @@ class ProofResponse:
         result["proofPropositions"] = from_union([lambda x: from_list(lambda x: to_class(Proposition, x), x), from_none], self.proof_propositions)
         result["resolvedProposition"] = from_union([lambda x: to_class(Proposition, x), from_none], self.resolved_proposition)
         result["truthValue"] = from_union([lambda x: to_enum(TruthValue, x), from_none], self.truth_value)
+        return result
+
+
+class ValidityStatus(Enum):
+    AUTO_APPROVED = "AUTO_APPROVED"
+    MACHINE_APPROVED = "MACHINE_APPROVED"
+    MACHINE_DENIED = "MACHINE_DENIED"
+    MANUAL_APPROVED = "MANUAL_APPROVED"
+    MANUAL_DENIED = "MANUAL_DENIED"
+    REQUESTED_APPROVAL = "REQUESTED_APPROVAL"
+    UNAPPROVED = "UNAPPROVED"
+    UNKNOWN = "UNKNOWN"
+
+
+class ValidityUpdate:
+    justification: Optional[str]
+    updater: Optional[User]
+    validity_status: Optional[ValidityStatus]
+
+    def __init__(self, justification: Optional[str], updater: Optional[User], validity_status: Optional[ValidityStatus]) -> None:
+        self.justification = justification
+        self.updater = updater
+        self.validity_status = validity_status
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'ValidityUpdate':
+        assert isinstance(obj, dict)
+        justification = from_union([from_str, from_none], obj.get("justification"))
+        updater = from_union([User.from_dict, from_none], obj.get("updater"))
+        validity_status = from_union([ValidityStatus, from_none], obj.get("validityStatus"))
+        return ValidityUpdate(justification, updater, validity_status)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["justification"] = from_union([from_str, from_none], self.justification)
+        result["updater"] = from_union([lambda x: to_class(User, x), from_none], self.updater)
+        result["validityStatus"] = from_union([lambda x: to_enum(ValidityStatus, x), from_none], self.validity_status)
+        return result
+
+
+class ResourceValidity:
+    global_validity: Optional[ValidityUpdate]
+    local_validity: Optional[ValidityUpdate]
+
+    def __init__(self, global_validity: Optional[ValidityUpdate], local_validity: Optional[ValidityUpdate]) -> None:
+        self.global_validity = global_validity
+        self.local_validity = local_validity
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'ResourceValidity':
+        assert isinstance(obj, dict)
+        global_validity = from_union([ValidityUpdate.from_dict, from_none], obj.get("globalValidity"))
+        local_validity = from_union([ValidityUpdate.from_dict, from_none], obj.get("localValidity"))
+        return ResourceValidity(global_validity, local_validity)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["globalValidity"] = from_union([lambda x: to_class(ValidityUpdate, x), from_none], self.global_validity)
+        result["localValidity"] = from_union([lambda x: to_class(ValidityUpdate, x), from_none], self.local_validity)
         return result
 
 
